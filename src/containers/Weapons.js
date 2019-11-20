@@ -14,7 +14,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-function Lists() {
+function Weapons() {
   const classes = useStyles()
 
   return (
@@ -45,4 +45,4 @@ function Lists() {
     </div>
   )
 }
-export default Lists
+export default Weapons
