@@ -26,6 +26,7 @@ const SLOT_HASHES = {
 }
 
 const ELEMENT_HASHES = {
+  0: 'Solar',
   1847026933: 'Solar',
   2303181850: 'Arc',
   3373582085: 'Kinetic',
