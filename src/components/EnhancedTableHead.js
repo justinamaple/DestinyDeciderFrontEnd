@@ -7,15 +7,11 @@ import TableRow from '@material-ui/core/TableRow'
 import Checkbox from '@material-ui/core/Checkbox'
 
 // This should almost certainly be passed in at some point
+// id is the key used to sort when clicking the header
 const headCells = [
   { id: 'icon', numeric: false, disablePadding: false, label: '' },
-  {
-    id: 'name',
-    numeric: false,
-    disablePadding: true,
-    label: 'Name'
-  },
-  { id: 'rarity', numeric: false, disablePadding: false, label: 'Rarity' },
+  { id: 'name', numeric: false, disablePadding: true, label: 'Name' },
+  { id: 'tierType', numeric: true, disablePadding: false, label: 'Tier' },
   { id: 'slot', numeric: false, disablePadding: false, label: 'Slot' },
   { id: 'element', numeric: false, disablePadding: false, label: 'Element' },
   { id: 'type', numeric: false, disablePadding: false, label: 'Type' },

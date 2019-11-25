@@ -18,16 +18,6 @@ const DESTINY2_URL = 'https://www.bungie.net'
 
 const rows = [...DisplayWeapons]
 
-function desc(a, b, orderBy) {
-  if (b[orderBy] < a[orderBy]) {
-    return -1
-  }
-  if (b[orderBy] > a[orderBy]) {
-    return 1
-  }
-  return 0
-}
-
 function stableSort(array, cmp) {
   const stabilizedThis = array.map((el, index) => [el, index])
   stabilizedThis.sort((a, b) => {
@@ -42,6 +32,19 @@ function getSorting(order, orderBy) {
   return order === 'desc'
     ? (a, b) => desc(a, b, orderBy)
     : (a, b) => -desc(a, b, orderBy)
+}
+
+function desc(a, b, orderBy) {
+  let sortA = a[orderBy] || -1
+  let sortB = b[orderBy] || -1
+
+  if (sortB < sortA) {
+    return -1
+  }
+  if (sortB > sortA) {
+    return 1
+  }
+  return 0
 }
 
 const useStyles = makeStyles(theme => ({
@@ -75,7 +78,7 @@ const useStyles = makeStyles(theme => ({
 function EnhancedTable() {
   const classes = useStyles()
   const [order, setOrder] = React.useState('asc')
-  const [orderBy, setOrderBy] = React.useState('calories')
+  const [orderBy, setOrderBy] = React.useState('name')
   const [selected, setSelected] = React.useState([])
   const [page, setPage] = React.useState(0)
   const [dense, setDense] = React.useState(false)
@@ -193,7 +196,7 @@ function EnhancedTable() {
                       >
                         {row.name}
                       </TableCell>
-                      <TableCell align='right'>{row.rarity}</TableCell>
+                      <TableCell align='right'>{row.tierTypeName}</TableCell>
                       <TableCell align='right'>{row.slot}</TableCell>
                       <TableCell align='right'>{row.element}</TableCell>
                       <TableCell align='right'>{row.type}</TableCell>

@@ -105,39 +105,7 @@ const getWeapons = () => {
 }
 
 const createMinWeaponItem = item => {
-  let namedStats = {}
-  for (let statHash in item.stats.stats) {
-    namedStats[StatDefinition[statHash].displayProperties.name] =
-      item.stats.stats[statHash]
-  }
-
-  return {
-    itemHash: item.hash,
-    displayProperties: item.displayProperties,
-    collectibleHash: item.collectibleHash,
-    secondaryIcon: item.secondaryIcon,
-    screenshot: item.screenshot,
-    itemTypeDisplayName: item.itemTypeDisplayName,
-    uiItemDisplayStyle: item.uiItemDisplayStyle,
-    itemTypeAndTierDisplayName: item.itemTypeAndTierDisplayName,
-    displaySource: item.displaySource,
-    tierTypeName: item.inventory.tierTypeName,
-    tierType: item.inventory.tierType,
-    stats: namedStats,
-    ammoType: item.equippingBlock.ammoType,
-    sockets: item.sockets,
-    investmentStats: item.investmentStats,
-    perks: item.perks,
-    itemCategoryHashes: item.itemCategoryHashes,
-    specialItemType: item.specialItemType,
-    itemType: item.itemType,
-    itemSubType: item.itemSubType,
-    classType: item.classType,
-    damageTypeHashes: item.damageTypeHashes,
-    damageTypes: item.damageTypes,
-    defaultDamageType: item.defaultDamageType,
-    defaultDamageTypeHash: item.defaultDamageTypeHash
-  }
+  return item
 }
 
 const createDisplayWeapon = item => {
@@ -167,7 +135,8 @@ const createDisplayWeapon = item => {
     icon: item.displayProperties.icon,
     ...namedStats,
     type: item.itemTypeDisplayName,
-    rarity: item.inventory.tierTypeName,
+    tierType: item.inventory.tierType,
+    tierTypeName: item.inventory.tierTypeName,
     slot: slot,
     element: element,
     rating: Math.random() * 5
