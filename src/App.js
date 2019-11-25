@@ -7,8 +7,8 @@ import Weapons from './/containers/Weapons'
 import Nav from './containers/Nav'
 import Page404 from './components/Page404'
 import SignInSide from './containers/SignInSide'
-import Profile from './containers/Profile'
 import SignUp from './containers/SignUp'
+import Profile from './containers/Profile'
 
 function App() {
   return (
@@ -16,7 +16,7 @@ function App() {
       <div className='App'>
         <Nav />
         <Switch>
-          <Route exact path='/login' component={SignInSide} />
+          <Route exact path='/signin' component={SignInSide} />
           <Route exact path='/signup' component={SignUp} />
           <Route exact path='/users' component={Users} />
           <Route exact path='/lists' component={Lists} />

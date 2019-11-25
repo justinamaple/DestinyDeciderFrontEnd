@@ -3,8 +3,6 @@ import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import TextField from '@material-ui/core/TextField'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import Checkbox from '@material-ui/core/Checkbox'
 import Link from '@material-ui/core/Link'
 import Paper from '@material-ui/core/Paper'
 import Box from '@material-ui/core/Box'
@@ -56,8 +54,15 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-export default function SignInSide() {
+function SignInSide() {
   const classes = useStyles()
+
+  const handleSubmit = event => {
+    event.persist()
+    event.preventDefault()
+    console.log(event.target[0].value)
+    console.log(event.target[2].value)
+  }
 
   return (
     <Grid container component='main' className={classes.root}>
@@ -71,7 +76,7 @@ export default function SignInSide() {
           <Typography component='h1' variant='h5'>
             Sign in
           </Typography>
-          <form className={classes.form} noValidate>
+          <form className={classes.form} onSubmit={handleSubmit}>
             <TextField
               variant='outlined'
               margin='normal'
@@ -94,23 +99,19 @@ export default function SignInSide() {
               id='password'
               autoComplete='current-password'
             />
-            <FormControlLabel
-              control={<Checkbox value='remember' color='primary' />}
-              label='Remember me'
-            />
-            <Button
-              type='submit'
-              fullWidth
-              variant='contained'
-              color='primary'
-              className={classes.submit}
-            >
-              Sign In
-            </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href='signup' variant='body2'>
-                  Create an account?
+              <Button
+                type='submit'
+                variant='contained'
+                fullWidth
+                color='primary'
+                className={classes.submit}
+              >
+                Sign In
+              </Button>
+              <Grid container>
+              <Grid item>
+                <Link href="signup" variant="body2">
+                  {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
             </Grid>
@@ -123,3 +124,5 @@ export default function SignInSide() {
     </Grid>
   )
 }
+
+export default SignInSide
