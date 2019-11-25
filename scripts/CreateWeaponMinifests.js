@@ -97,7 +97,9 @@ const getWeapons = () => {
         WEAPONS.displayName[item.displayProperties.name] = displayPropsWithHash
 
         WEAPONS.displayWeaponsArray.push(createMinWeaponItem(item))
-        WEAPONS.display.push(createDisplayWeapon(item))
+
+        let weapon = createDisplayWeapon(item)
+        if (weapon) WEAPONS.display.push(weapon)
       }
     }
   }
@@ -110,6 +112,9 @@ const createMinWeaponItem = item => {
 }
 
 const createDisplayWeapon = item => {
+  // If there is no damage type, this is an old duplicate entry
+  if (item.defaultDamageType === 0 || !item.defaultDamageTypeHash) return null
+
   let namedStats = {}
   for (let statHash in item.stats.stats) {
     let statName = StatDefinition[statHash].displayProperties.name
