@@ -145,9 +145,14 @@ const createDisplayWeapon = item => {
   for (let statHash in item.stats.stats) {
     let statName = StatDefinition[statHash].displayProperties.name
 
-    if (statName === 'rounds per minute') statName = 'rpm'
+    if (statName === 'Rounds Per Minute') {
+      statName = 'rpm'
+    }
+
     if (statName !== '' && statName !== 'Inventory Size') {
-      namedStats[statName.toLowerCase()] = item.stats.stats[statHash].value
+      let statValue = item.stats.stats[statHash].value
+      if (!statValue) statValue = -1
+      namedStats[statName.toLowerCase()] = statValue
     }
   }
 

@@ -24,14 +24,6 @@ export default function PaperSheet(props) {
       <Grid item xs={12}>
         <img src={iconURL} alt={props.info.displayProperties.name} />
       </Grid>
-      {/* <Grid item xs={12}>
-        <Typography component='h6' variant='h6'>
-          {props.info.displayProperties.name}
-        </Typography>
-        <Typography variant='subtitle1' color='textSecondary'>
-          {props.info.itemTypeAndTierDisplayName}
-        </Typography>
-      </Grid> */}
     </Paper>
   )
 }

@@ -7,6 +7,7 @@ import Weapons from './/containers/Weapons'
 import Nav from './containers/Nav'
 import Page404 from './components/Page404'
 import SignInSide from './containers/SignInSide'
+import Profile from './containers/Profile'
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route exact path='/users' component={Users} />
           <Route exact path='/lists' component={Lists} />
           <Route exact path='/weapons' component={Weapons} />
+          <Route exact path='/profile' component={Profile} />
           <Route component={Page404} />
         </Switch>
       </div>
