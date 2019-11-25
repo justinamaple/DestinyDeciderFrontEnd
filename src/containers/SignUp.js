@@ -52,8 +52,30 @@ function SignUp() {
   const handleSubmit = event => {
     event.persist()
     event.preventDefault()
+<<<<<<< HEAD
     console.log(event.target[0].value)
     console.log(event.target[2].value)
+=======
+    // TODO: Don't hardcode this for prod
+    signup(event.target[0].value, event.target[2].value)
+    .then(json => {
+      console.log(json)
+    })
+  }
+
+  const signup = (email, password) => {
+    return fetch('http://localhost:3000/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password
+      })
+    }).then(resp => resp.json())
+>>>>>>> Setup Base Sign In and Sign Up
   }
 
   return (

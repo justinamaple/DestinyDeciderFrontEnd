@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 import Lists from './containers/Lists'
 import Users from './containers/Users'
@@ -11,6 +11,20 @@ import SignUp from './containers/SignUp'
 import Profile from './containers/Profile'
 
 function App() {
+
+  const handleSignOut = () => {
+    localStorage.clear()
+    return <Redirect to='/signin' />
+  }
+
+  const renderRedirect = () => {
+    if (this.state.accountId === '' && localStorage.getItem('account')) {
+      return <Redirect to='/signin' />
+    } else {
+      return <Redirect to='/' />
+    }
+  }
+
   return (
     <Router>
       <div className='App'>

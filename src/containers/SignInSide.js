@@ -1,4 +1,5 @@
 import React from 'react'
+import { Redirect } from 'react-router-dom'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 import CssBaseline from '@material-ui/core/CssBaseline'
@@ -57,6 +58,7 @@ const useStyles = makeStyles(theme => ({
 function SignInSide() {
   const classes = useStyles()
 
+<<<<<<< HEAD
   const handleSubmit = event => {
     event.persist()
     event.preventDefault()
@@ -64,6 +66,65 @@ function SignInSide() {
     console.log(event.target[2].value)
   }
 
+=======
+
+
+  const handleSubmit = event => {
+    event.persist()
+    event.preventDefault()
+    // TODO: Don't hardcode this for prod
+    signin(event.target[0].value, event.target[2].value)
+    .then(json => {
+      setAccountInfo(json)
+    })
+  }
+
+  const signin = (email, password) => {
+    return fetch('http://localhost:3000/signin', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password
+      })
+    }).then(resp => resp.json())
+  }
+
+  const setAccountInfo = json => {
+    console.log(json)
+    localStorage.setItem('userId', JSON.stringify(json.userId))
+  }
+
+  const closeErrors = () => {
+    // this.setState({ errors: null })
+  }
+
+  // const renderErrors = () => {
+  //   if (this.state.errors) {
+  //     return (
+  //       <div className='ui error message'>
+  //         <i className='close icon' onClick={this.closeErrors}></i>
+  //         <div className='header'>
+  //           There were some errors with your submission
+  //         </div>
+  //         {/* <ul className='list'>{this.renderErrorList()}</ul> */}
+  //       </div>
+  //     )
+  //   }
+  // }
+
+  // const renderErrorList = () => {
+    // const { errors } = this.state
+
+  //   return Object.keys(errors).map((key, index) => (
+  //     <li key={index}>{`${key} ${errors[key]}`}</li>
+  //   ))
+  // }
+
+>>>>>>> Setup Base Sign In and Sign Up
   return (
     <Grid container component='main' className={classes.root}>
       <CssBaseline />
