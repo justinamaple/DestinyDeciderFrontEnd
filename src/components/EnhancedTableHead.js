@@ -9,8 +9,8 @@ import Checkbox from '@material-ui/core/Checkbox'
 // This should almost certainly be passed in at some point
 // id is the key used to sort when clicking the header
 const headCells = [
-  { id: 'icon', numeric: false, disablePadding: false, label: '' },
-  { id: 'name', numeric: false, disablePadding: true, label: 'Name' },
+  { id: 'icon', numeric: false, disablePadding: true, label: '' },
+  { id: 'name', numeric: false, disablePadding: false, label: 'Name' },
   { id: 'tierType', numeric: true, disablePadding: false, label: 'Tier' },
   { id: 'slot', numeric: false, disablePadding: false, label: 'Slot' },
   { id: 'element', numeric: false, disablePadding: false, label: 'Element' },
@@ -44,13 +44,13 @@ function EnhancedTableHead(props) {
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={numSelected === rowCount}
             onChange={onSelectAllClick}
-            inputProps={{ 'aria-label': 'select all desserts' }}
+            inputProps={{ 'aria-label': 'select all weapons' }}
           />
         </TableCell>
         {headCells.map(headCell => (
           <TableCell
             key={headCell.id}
-            align={headCell.numeric ? 'right' : 'left'}
+            align={'right'}
             padding={headCell.disablePadding ? 'none' : 'default'}
             sortDirection={orderBy === headCell.id ? order : false}
           >

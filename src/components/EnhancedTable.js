@@ -192,7 +192,7 @@ function EnhancedTable() {
                         component='th'
                         id={labelId}
                         scope='row'
-                        padding='none'
+                        align='right'
                       >
                         {row.name}
                       </TableCell>
