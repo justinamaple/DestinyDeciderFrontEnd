@@ -58,17 +58,6 @@ const useStyles = makeStyles(theme => ({
 function SignInSide() {
   const classes = useStyles()
 
-<<<<<<< HEAD
-  const handleSubmit = event => {
-    event.persist()
-    event.preventDefault()
-    console.log(event.target[0].value)
-    console.log(event.target[2].value)
-  }
-
-=======
-
-
   const handleSubmit = event => {
     event.persist()
     event.preventDefault()
@@ -124,7 +113,6 @@ function SignInSide() {
   //   ))
   // }
 
->>>>>>> Setup Base Sign In and Sign Up
   return (
     <Grid container component='main' className={classes.root}>
       <CssBaseline />

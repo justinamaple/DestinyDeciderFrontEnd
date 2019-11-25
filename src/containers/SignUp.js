@@ -52,10 +52,6 @@ function SignUp() {
   const handleSubmit = event => {
     event.persist()
     event.preventDefault()
-<<<<<<< HEAD
-    console.log(event.target[0].value)
-    console.log(event.target[2].value)
-=======
     // TODO: Don't hardcode this for prod
     signup(event.target[0].value, event.target[2].value)
     .then(json => {
@@ -75,7 +71,6 @@ function SignUp() {
         password: password
       })
     }).then(resp => resp.json())
->>>>>>> Setup Base Sign In and Sign Up
   }
 
   return (
