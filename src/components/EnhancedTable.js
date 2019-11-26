@@ -12,6 +12,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Switch from '@material-ui/core/Switch'
 import EnhancedTableHead from './EnhancedTableHead'
 import EnhancedTableToolbar from '../components/EnhancedTableToolbar'
+import TablePaginationActions from './TablePaginationActions'
 import displayWeaponsArray from '../assets/minifests/displayWeaponsArray'
 
 const DESTINY2_URL = 'https://www.bungie.net'
@@ -221,14 +222,13 @@ function EnhancedTable() {
           count={rows.length}
           rowsPerPage={rowsPerPage}
           page={page}
-          backIconButtonProps={{
-            'aria-label': 'previous page'
-          }}
-          nextIconButtonProps={{
-            'aria-label': 'next page'
+          SelectProps={{
+            inputProps: { 'aria-label': 'rows per page' },
+            native: true
           }}
           onChangePage={handleChangePage}
           onChangeRowsPerPage={handleChangeRowsPerPage}
+          ActionsComponent={TablePaginationActions}
         />
       </Paper>
       <FormControlLabel
