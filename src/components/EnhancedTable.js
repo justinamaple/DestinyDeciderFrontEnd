@@ -17,8 +17,6 @@ import displayWeaponsArray from '../assets/minifests/displayWeaponsArray'
 
 const DESTINY2_URL = 'https://www.bungie.net'
 
-const rows = [...displayWeaponsArray]
-
 function stableSort(array, cmp) {
   const stabilizedThis = array.map((el, index) => [el, index])
   stabilizedThis.sort((a, b) => {
@@ -76,7 +74,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-function EnhancedTable() {
+function EnhancedTable(props) {
   const classes = useStyles()
   const [order, setOrder] = React.useState('asc')
   const [orderBy, setOrderBy] = React.useState('name')
@@ -93,7 +91,7 @@ function EnhancedTable() {
 
   const handleSelectAllClick = event => {
     if (event.target.checked) {
-      const newSelecteds = rows.map(n => n.name)
+      const newSelecteds = props.rows.map(n => n.name)
       setSelected(newSelecteds)
       return
     }
@@ -136,7 +134,7 @@ function EnhancedTable() {
   const isSelected = name => selected.indexOf(name) !== -1
 
   const emptyRows =
-    rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage)
+    rowsPerPage - Math.min(rowsPerPage, props.rows.length - page * rowsPerPage)
 
   return (
     <div className={classes.root}>
@@ -156,10 +154,10 @@ function EnhancedTable() {
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={rows.length}
+              rowCount={props.rows.length}
             />
             <TableBody>
-              {stableSort(rows, getSorting(order, orderBy))
+              {stableSort(props.rows, getSorting(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
                   const isItemSelected = isSelected(row.name)
@@ -172,7 +170,7 @@ function EnhancedTable() {
                       role='checkbox'
                       aria-checked={isItemSelected}
                       tabIndex={-1}
-                      key={row.itemHash}
+                      key={row.itemInstanceId || row.itemHash}
                       selected={isItemSelected}
                     >
                       <TableCell padding='checkbox'>
@@ -219,7 +217,7 @@ function EnhancedTable() {
         <TablePagination
           rowsPerPageOptions={[10, 25, 50, 100]}
           component='div'
-          count={rows.length}
+          count={props.rows.length}
           rowsPerPage={rowsPerPage}
           page={page}
           SelectProps={{

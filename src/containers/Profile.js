@@ -1,12 +1,9 @@
 import React, { Component } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
+import { Typography } from '@material-ui/core'
 import ItemIconPaper from '../components/ItemIconPaper'
-// TODO: This will need to be updated, maybe use a map that strores the base name to this versions hash value?
-// import InventoryBucket from '../assets/manifests/DestinyInventoryBucketDefinition-7ab91c74-e8a4-40c7-9f70-16a4354125c0.json'
-// import InventoryItem from '../assets/manifests/DestinyInventoryItemDefinition-7ab91c74-e8a4-40c7-9f70-16a4354125c0.json'
-// import ItemCategory from '../assets/manifests/DestinyItemCategoryDefinition-7ab91c74-e8a4-40c7-9f70-16a4354125c0.json'
-// import displayWeaponsArray from '../assets/minifests/displayWeaponsArray.json'
+import EnhancedTable from '../components/EnhancedTable'
 import displayWeaponsHash from '../assets/minifests/displayWeaponsHash.json'
 
 // TODO: Don't hardcode these
@@ -25,9 +22,7 @@ const WeaponBuckets = {
 
 class Profile extends Component {
   state = {
-    inventory: [],
-    profileWeapons: [],
-    weaponInstanceIds: []
+    profileWeapons: []
   }
 
   fetchCharactersEquippedWeapons = () => {
@@ -53,7 +48,6 @@ class Profile extends Component {
         let characters = json.Response.characterEquipment.data
 
         for (let character in characters) {
-          console.log(characters)
           let charEquippedWeapons = this.filterForWeapons(
             characters[character].items
           )
@@ -95,7 +89,6 @@ class Profile extends Component {
       .then(resp => resp.json())
       .then(json => {
         let allCharWeapons = []
-        console.log(json)
         let characters = json.Response.characterInventories.data
 
         for (let character in characters) {
@@ -117,15 +110,12 @@ class Profile extends Component {
     bucket.forEach(item => {
       let weapon = displayWeaponsHash[item.itemHash]
       if (weapon) {
-        console.log(weapon)
         weapons.push({
           ...weapon,
           itemInstanceId: item.itemInstanceId
         })
       }
     })
-
-    console.log(weapons)
 
     return weapons
   }
@@ -197,12 +187,6 @@ class Profile extends Component {
     })
   }
 
-  renderAllDisplayWeapons = () => {
-    // return displayWeaponsArray.map(item => {
-    //   return item ? <ItemIconPaper key={item.itemHash} info={item} /> : null
-    // })
-  }
-
   convertHash = i => {
     // Hashes are 32-bit unsigned integers
     let shift = i >> 32
@@ -219,7 +203,14 @@ class Profile extends Component {
     return (
       <>
         <Grid container spacing={3} alignItems='center' justify='center'>
-          {this.renderVaultWeapons()}
+          <Grid item xs={11}>
+            <Typography component='h3' variant='h3'>
+              Profile
+            </Typography>
+          </Grid>
+          <Grid item xs={11}>
+            <EnhancedTable rows={this.state.profileWeapons} />
+          </Grid>
         </Grid>
       </>
     )
