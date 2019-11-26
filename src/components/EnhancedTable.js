@@ -10,13 +10,13 @@ import Paper from '@material-ui/core/Paper'
 import Checkbox from '@material-ui/core/Checkbox'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Switch from '@material-ui/core/Switch'
-import DisplayWeapons from '../assets/minifests/displayWeapons'
 import EnhancedTableHead from './EnhancedTableHead'
 import EnhancedTableToolbar from '../components/EnhancedTableToolbar'
+import displayWeaponsArray from '../assets/minifests/displayWeaponsArray'
 
 const DESTINY2_URL = 'https://www.bungie.net'
 
-const rows = [...DisplayWeapons]
+const rows = [...displayWeaponsArray]
 
 function stableSort(array, cmp) {
   const stabilizedThis = array.map((el, index) => [el, index])

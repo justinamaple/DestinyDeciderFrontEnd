@@ -62,14 +62,13 @@ function SignInSide() {
     event.persist()
     event.preventDefault()
     // TODO: Don't hardcode this for prod
-    signin(event.target[0].value, event.target[2].value)
-    .then(json => {
+    signin(event.target[0].value, event.target[2].value).then(json => {
       setAccountInfo(json)
     })
   }
 
   const signin = (email, password) => {
-    return fetch('http://localhost:3000/signin', {
+    return fetch('http://localhost:3001/signin', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -106,7 +105,7 @@ function SignInSide() {
   // }
 
   // const renderErrorList = () => {
-    // const { errors } = this.state
+  // const { errors } = this.state
 
   //   return Object.keys(errors).map((key, index) => (
   //     <li key={index}>{`${key} ${errors[key]}`}</li>
@@ -148,18 +147,18 @@ function SignInSide() {
               id='password'
               autoComplete='current-password'
             />
-              <Button
-                type='submit'
-                variant='contained'
-                fullWidth
-                color='primary'
-                className={classes.submit}
-              >
-                Sign In
-              </Button>
-              <Grid container>
+            <Button
+              type='submit'
+              variant='contained'
+              fullWidth
+              color='primary'
+              className={classes.submit}
+            >
+              Sign In
+            </Button>
+            <Grid container>
               <Grid item>
-                <Link href="signup" variant="body2">
+                <Link href='signup' variant='body2'>
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>

@@ -73,10 +73,8 @@ const StatDefinition = JSON.parse(
 const getWeapons = () => {
   const WEAPONS = {
     all: {},
-    displayHash: {},
-    displayName: {},
-    displayWeaponsArray: [],
-    display: []
+    displayWeaponsHash: {},
+    displayWeaponsArray: []
   }
 
   for (let itemHash in ItemDefinition) {
@@ -87,28 +85,16 @@ const getWeapons = () => {
       if (WEAPON_NAMES[bucket.displayProperties.name]) {
         WEAPONS.all[itemHash] = item
 
-        WEAPONS.displayHash[itemHash] = item.displayProperties
-
-        let displayPropsWithHash = {
-          ...item.displayProperties,
-          itemHash: itemHash
-        }
-
-        WEAPONS.displayName[item.displayProperties.name] = displayPropsWithHash
-
-        WEAPONS.displayWeaponsArray.push(createMinWeaponItem(item))
-
         let weapon = createDisplayWeapon(item)
-        if (weapon) WEAPONS.display.push(weapon)
+        if (weapon) {
+          WEAPONS.displayWeaponsArray.push(weapon)
+          WEAPONS.displayWeaponsHash[itemHash] = weapon
+        }
       }
     }
   }
 
   return WEAPONS
-}
-
-const createMinWeaponItem = item => {
-  return item
 }
 
 const createDisplayWeapon = item => {
@@ -164,7 +150,5 @@ const writeMinifestToFile = (filename, object) => {
 
 const WEAPONS = getWeapons()
 writeMinifestToFile('DestinyWeaponDefinition', WEAPONS.all)
-writeMinifestToFile('displayHashWeapons', WEAPONS.displayHash)
-writeMinifestToFile('displayNameWeapons', WEAPONS.displayName)
+writeMinifestToFile('displayWeaponsHash', WEAPONS.displayWeaponsHash)
 writeMinifestToFile('displayWeaponsArray', WEAPONS.displayWeaponsArray)
-writeMinifestToFile('displayWeapons', WEAPONS.display)

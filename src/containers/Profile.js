@@ -3,10 +3,11 @@ import { makeStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
 import ItemIconPaper from '../components/ItemIconPaper'
 // TODO: This will need to be updated, maybe use a map that strores the base name to this versions hash value?
-import InventoryBucket from '../assets/manifests/DestinyInventoryBucketDefinition-7ab91c74-e8a4-40c7-9f70-16a4354125c0.json'
-import InventoryItem from '../assets/manifests/DestinyInventoryItemDefinition-7ab91c74-e8a4-40c7-9f70-16a4354125c0.json'
-import ItemCategory from '../assets/manifests/DestinyItemCategoryDefinition-7ab91c74-e8a4-40c7-9f70-16a4354125c0.json'
-import displayWeaponsArray from '../assets/minifests/displayWeaponsArray.json'
+// import InventoryBucket from '../assets/manifests/DestinyInventoryBucketDefinition-7ab91c74-e8a4-40c7-9f70-16a4354125c0.json'
+// import InventoryItem from '../assets/manifests/DestinyInventoryItemDefinition-7ab91c74-e8a4-40c7-9f70-16a4354125c0.json'
+// import ItemCategory from '../assets/manifests/DestinyItemCategoryDefinition-7ab91c74-e8a4-40c7-9f70-16a4354125c0.json'
+// import displayWeaponsArray from '../assets/minifests/displayWeaponsArray.json'
+import displayWeaponsHash from '../assets/minifests/displayWeaponsHash.json'
 
 // TODO: Don't hardcode these
 const DESTINY2_URL = 'https://www.bungie.net/Platform/Destiny2'
@@ -48,14 +49,15 @@ class Profile extends Component {
     )
       .then(resp => resp.json())
       .then(json => {
-        console.log(json)
         let allCharEquippedWeapons = []
         let characters = json.Response.characterEquipment.data
 
         for (let character in characters) {
-          let charEquippedWeapons = this.filterCharacterForWeapons(
-            characters[character]
+          console.log(characters)
+          let charEquippedWeapons = this.filterForWeapons(
+            characters[character].items
           )
+
           allCharEquippedWeapons = [
             ...allCharEquippedWeapons,
             ...charEquippedWeapons
@@ -97,9 +99,7 @@ class Profile extends Component {
         let characters = json.Response.characterInventories.data
 
         for (let character in characters) {
-          let charWeapons = this.filterCharacterForWeapons(
-            characters[character]
-          )
+          let charWeapons = this.filterForWeapons(characters[character].items)
           allCharWeapons = [...allCharWeapons, ...charWeapons]
         }
 
@@ -111,23 +111,21 @@ class Profile extends Component {
       })
   }
 
-  filterCharacterForWeapons = character => {
+  filterForWeapons = bucket => {
     let weapons = []
 
-    character.items.forEach(item => {
-      if (WeaponBuckets[item.bucketHash]) {
-        let invItem = this.hashLookup(InventoryItem, item.itemHash)
-        invItem.itemCategoryHashes.forEach(itemCategoryHash => {
-          let itemCategory = this.hashLookup(ItemCategory, itemCategoryHash)
-          if (itemCategory.shortTitle === 'Weapon') {
-            weapons.push({
-              ...invItem,
-              itemInstanceId: item.itemInstanceId
-            })
-          }
+    bucket.forEach(item => {
+      let weapon = displayWeaponsHash[item.itemHash]
+      if (weapon) {
+        console.log(weapon)
+        weapons.push({
+          ...weapon,
+          itemInstanceId: item.itemInstanceId
         })
       }
     })
+
+    console.log(weapons)
 
     return weapons
   }
@@ -151,8 +149,8 @@ class Profile extends Component {
     )
       .then(resp => resp.json())
       .then(json => {
-        let profileWeapons = this.filterProfileForWeapons(
-          json.Response.profileInventory
+        let profileWeapons = this.filterForWeapons(
+          json.Response.profileInventory.data.items
         )
 
         this.setState(prevState => {
@@ -161,27 +159,6 @@ class Profile extends Component {
           }
         })
       })
-  }
-
-  filterProfileForWeapons = inventory => {
-    let weapons = []
-
-    inventory.data.items.forEach(item => {
-      if (item.bucketHash === GeneralItemBucket) {
-        let invItem = this.hashLookup(InventoryItem, item.itemHash)
-        invItem.itemCategoryHashes.forEach(itemCategoryHash => {
-          let itemCategory = this.hashLookup(ItemCategory, itemCategoryHash)
-          if (itemCategory.shortTitle === 'Weapon') {
-            weapons.push({
-              ...invItem,
-              itemInstanceId: item.itemInstanceId
-            })
-          }
-        })
-      }
-    })
-
-    return weapons
   }
 
   fetchItemInstances = () => {
@@ -221,19 +198,15 @@ class Profile extends Component {
   }
 
   renderAllDisplayWeapons = () => {
-    return displayWeaponsArray.map(item => {
-      return item ? <ItemIconPaper key={item.itemHash} info={item} /> : null
-    })
+    // return displayWeaponsArray.map(item => {
+    //   return item ? <ItemIconPaper key={item.itemHash} info={item} /> : null
+    // })
   }
 
   convertHash = i => {
     // Hashes are 32-bit unsigned integers
     let shift = i >> 32
     return shift <= 0 ? i : shift
-  }
-
-  hashLookup = (manifest, hash) => {
-    return manifest[this.convertHash(hash)]
   }
 
   componentDidMount() {
