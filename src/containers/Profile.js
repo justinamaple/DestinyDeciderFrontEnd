@@ -227,14 +227,10 @@ class Profile extends Component {
       <>
         <Grid container spacing={3} alignItems='center' justify='center'>
           <Grid item xs={11}>
-            <Typography component='h3' variant='h3'>
-              Profile
-            </Typography>
-          </Grid>
-          <Grid item xs={11}>
             <EnhancedTable
               rows={this.state.profileWeapons}
               headCells={headCells}
+              tableName={'Account Wide Weapons'}
             />
           </Grid>
         </Grid>

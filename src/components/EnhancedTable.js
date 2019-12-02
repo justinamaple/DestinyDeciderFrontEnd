@@ -75,6 +75,7 @@ const useStyles = makeStyles(theme => ({
 
 function EnhancedTable(props) {
   const classes = useStyles()
+  const { headCells, rows, tableName } = props
   const [order, setOrder] = React.useState('asc')
   const [orderBy, setOrderBy] = React.useState('name')
   const [selected, setSelected] = React.useState([])
@@ -90,7 +91,7 @@ function EnhancedTable(props) {
 
   const handleSelectAllClick = event => {
     if (event.target.checked) {
-      const newSelecteds = props.rows.map(n => n.name)
+      const newSelecteds = rows.map(n => n.name)
       setSelected(newSelecteds)
       return
     }
@@ -133,12 +134,15 @@ function EnhancedTable(props) {
   const isSelected = name => selected.indexOf(name) !== -1
 
   const emptyRows =
-    rowsPerPage - Math.min(rowsPerPage, props.rows.length - page * rowsPerPage)
+    rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage)
 
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableToolbar
+          numSelected={selected.length}
+          tableName={tableName}
+        />
         <div className={classes.tableWrapper}>
           <Table
             className={classes.table}
@@ -153,11 +157,11 @@ function EnhancedTable(props) {
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={props.rows.length}
-              headCells={props.headCells}
+              rowCount={rows.length}
+              headCells={headCells}
             />
             <TableBody>
-              {stableSort(props.rows, getSorting(order, orderBy))
+              {stableSort(rows, getSorting(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
                   const isItemSelected = isSelected(row.name)
@@ -218,7 +222,7 @@ function EnhancedTable(props) {
         <TablePagination
           rowsPerPageOptions={[10, 25, 50, 100]}
           component='div'
-          count={props.rows.length}
+          count={rows.length}
           rowsPerPage={rowsPerPage}
           page={page}
           SelectProps={{

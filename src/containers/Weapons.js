@@ -26,12 +26,11 @@ function Weapons() {
     <>
       <Grid container spacing={3} alignItems='center' justify='center'>
         <Grid item xs={11}>
-          <Typography component='h3' variant='h3'>
-            All Weapons
-          </Typography>
-        </Grid>
-        <Grid item xs={11}>
-          <EnhancedTable rows={displayWeaponsArray} headCells={headCells} />
+          <EnhancedTable
+            rows={displayWeaponsArray}
+            headCells={headCells}
+            tableName={'All Weapons'}
+          />
         </Grid>
       </Grid>
     </>
