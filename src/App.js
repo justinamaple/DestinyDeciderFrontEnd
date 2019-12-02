@@ -1,5 +1,11 @@
 import React from 'react'
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect
+} from 'react-router-dom'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 import Lists from './containers/Lists'
 import Users from './containers/Users'
@@ -9,9 +15,11 @@ import Page404 from './components/Page404'
 import SignInSide from './containers/SignInSide'
 import SignUp from './containers/SignUp'
 import Profile from './containers/Profile'
+import { simpleAction } from './store/actions/actions'
+
+const state = {}
 
 function App() {
-
   const handleSignOut = () => {
     localStorage.clear()
     return <Redirect to='/signin' />
@@ -24,6 +32,11 @@ function App() {
       return <Redirect to='/' />
     }
   }
+
+  const text = useSelector(state => {
+    return state.text
+  })
+  const dispatch = useDispatch()
 
   return (
     <Router>
@@ -39,6 +52,10 @@ function App() {
           <Route component={Page404} />
         </Switch>
       </div>
+      <button onClick={() => dispatch(simpleAction('text'))}>
+        Test redux action
+      </button>
+      <pre>{text}</pre>
     </Router>
   )
 }

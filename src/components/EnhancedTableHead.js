@@ -8,18 +8,7 @@ import Checkbox from '@material-ui/core/Checkbox'
 
 // This should almost certainly be passed in at some point
 // id is the key used to sort when clicking the header
-const headCells = [
-  { id: 'icon', numeric: false, disablePadding: true, label: '' },
-  { id: 'name', numeric: false, disablePadding: false, label: 'Name' },
-  { id: 'tierType', numeric: true, disablePadding: false, label: 'Tier' },
-  { id: 'slot', numeric: false, disablePadding: false, label: 'Slot' },
-  { id: 'element', numeric: false, disablePadding: false, label: 'Element' },
-  { id: 'type', numeric: false, disablePadding: false, label: 'Type' },
-  { id: 'impact', numeric: true, disablePadding: false, label: 'Impact' },
-  { id: 'range', numeric: true, disablePadding: false, label: 'Range' },
-  { id: 'rpm', numeric: true, disablePadding: false, label: 'RPM' },
-  { id: 'magazine', numeric: true, disablePadding: false, label: 'Magazine' }
-]
+
 
 function EnhancedTableHead(props) {
   const {
@@ -29,7 +18,8 @@ function EnhancedTableHead(props) {
     orderBy,
     numSelected,
     rowCount,
-    onRequestSort
+    onRequestSort,
+    headCells
   } = props
 
   const createSortHandler = property => event => {
@@ -73,7 +63,6 @@ function EnhancedTableHead(props) {
   )
 }
 
-// Not sure where this goes
 EnhancedTableHead.propTypes = {
   classes: PropTypes.object.isRequired,
   numSelected: PropTypes.number.isRequired,

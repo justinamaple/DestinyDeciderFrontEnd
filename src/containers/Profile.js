@@ -10,7 +10,7 @@ import displayWeaponsHash from '../assets/minifests/displayWeaponsHash.json'
 const DESTINY2_URL = 'https://www.bungie.net/Platform/Destiny2'
 const membershipType = '3' // Guessing this is Steam?
 const membershipId = '4611686018467712948' // J3ubbleboy
-const characterId = '2305843009304746410' // Hunter
+// const characterId = '2305843009304746410' // Hunter
 
 const GeneralItemBucket = 138197802
 
@@ -200,6 +200,29 @@ class Profile extends Component {
   }
 
   render() {
+    const headCells = [
+      { id: 'icon', numeric: false, disablePadding: true, label: '' },
+      { id: 'name', numeric: false, disablePadding: false, label: 'Name' },
+      { id: 'tierType', numeric: true, disablePadding: false, label: 'Tier' },
+      { id: 'slot', numeric: false, disablePadding: false, label: 'Slot' },
+      {
+        id: 'element',
+        numeric: false,
+        disablePadding: false,
+        label: 'Element'
+      },
+      { id: 'type', numeric: false, disablePadding: false, label: 'Type' },
+      { id: 'impact', numeric: true, disablePadding: false, label: 'Impact' },
+      { id: 'range', numeric: true, disablePadding: false, label: 'Range' },
+      { id: 'rpm', numeric: true, disablePadding: false, label: 'RPM' },
+      {
+        id: 'magazine',
+        numeric: true,
+        disablePadding: false,
+        label: 'Magazine'
+      }
+    ]
+
     return (
       <>
         <Grid container spacing={3} alignItems='center' justify='center'>
@@ -209,7 +232,10 @@ class Profile extends Component {
             </Typography>
           </Grid>
           <Grid item xs={11}>
-            <EnhancedTable rows={this.state.profileWeapons} />
+            <EnhancedTable
+              rows={this.state.profileWeapons}
+              headCells={headCells}
+            />
           </Grid>
         </Grid>
       </>

@@ -13,7 +13,6 @@ import Switch from '@material-ui/core/Switch'
 import EnhancedTableHead from './EnhancedTableHead'
 import EnhancedTableToolbar from '../components/EnhancedTableToolbar'
 import TablePaginationActions from './TablePaginationActions'
-import displayWeaponsArray from '../assets/minifests/displayWeaponsArray'
 
 const DESTINY2_URL = 'https://www.bungie.net'
 
@@ -155,6 +154,7 @@ function EnhancedTable(props) {
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
               rowCount={props.rows.length}
+              headCells={props.headCells}
             />
             <TableBody>
               {stableSort(props.rows, getSorting(order, orderBy))
@@ -192,6 +192,7 @@ function EnhancedTable(props) {
                         id={labelId}
                         scope='row'
                         align='right'
+                        size='medium'
                       >
                         {row.name}
                       </TableCell>

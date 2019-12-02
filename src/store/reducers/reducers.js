@@ -1,9 +1,9 @@
 export default (state = {}, action) => {
+  console.log('reducer', state, action)
+
   switch (action.type) {
     case 'SIMPLE_ACTION':
-      return {
-        result: action.payload
-      }
+      return { text: action.text }
     default:
       return state
   }
