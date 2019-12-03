@@ -7,6 +7,7 @@ import {
   Redirect
 } from 'react-router-dom'
 import Lists from './containers/Lists'
+import List from './containers/List'
 import Users from './containers/Users'
 import Weapons from './/containers/Weapons'
 import Nav from './containers/Nav'
@@ -14,7 +15,6 @@ import Page404 from './components/Page404'
 import SignInSide from './containers/SignInSide'
 import SignUp from './containers/SignUp'
 import Profile from './containers/Profile'
-import allActions from './store/actions/index'
 
 function App() {
   const text = useSelector(state => state.simpleAction.text)
@@ -47,6 +47,7 @@ function App() {
           <Route exact path='/signin' component={SignInSide} />
           <Route exact path='/signup' component={SignUp} />
           <Route exact path='/users' component={Users} />
+          <Route exact path='/list' component={List} />
           <Route exact path='/lists' component={Lists} />
           <Route exact path='/weapons' component={Weapons} />
           <Route exact path='/profile' component={Profile} />

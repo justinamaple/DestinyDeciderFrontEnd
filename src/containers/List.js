@@ -1,12 +1,22 @@
 import React from 'react'
+import { makeStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
 import EnhancedTable from '../components/EnhancedTable'
 import displayWeaponsArray from '../assets/minifests/displayWeaponsArray.json'
 
-// TODO: Don't hardcode these
-const DESTINY2_URL = 'https://www.bungie.net/Platform/Destiny2'
+const useStyles = makeStyles(theme => ({
+  root: {
+    flexGrow: 1
+  },
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: 'center',
+    color: theme.palette.text.secondary
+  }
+}))
 
-function Weapons() {
+function List() {
+  const classes = useStyles()
   const headCells = [
     { id: 'icon', numeric: false, disablePadding: true, label: '' },
     { id: 'name', numeric: false, disablePadding: false, label: 'Name' },
@@ -27,12 +37,11 @@ function Weapons() {
           <EnhancedTable
             rows={displayWeaponsArray}
             headCells={headCells}
-            tableName={'All Weapons'}
+            tableName={'List Name Weapons'}
           />
         </Grid>
       </Grid>
     </>
   )
 }
-
-export default Weapons
+export default List
