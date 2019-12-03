@@ -6,14 +6,13 @@ import thunk from 'redux-thunk'
 import './styles/index.css'
 import App from './App'
 import * as serviceWorker from './serviceWorker'
-import reducer from './store/reducers/reducers'
-import reducers from './store/reducers/reducers'
+import rootReducer from './store/reducers/rootReducer'
 
 const initialState = {
   text: ''
 }
 
-const store = createStore(reducers, undefined, applyMiddleware(thunk))
+const store = createStore(rootReducer, initialState, applyMiddleware(thunk))
 
 ReactDOM.render(
   <Provider store={store}>
