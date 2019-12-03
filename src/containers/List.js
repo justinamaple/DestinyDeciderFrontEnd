@@ -31,17 +31,15 @@ function List() {
   ]
 
   return (
-    <>
-      <Grid container spacing={3} alignItems='center' justify='center'>
-        <Grid item xs={11}>
-          <EnhancedTable
-            rows={displayWeaponsArray}
-            headCells={headCells}
-            tableName={'List Name Weapons'}
-          />
-        </Grid>
+    <Grid container spacing={3} alignItems='center' justify='center'>
+      <Grid item xs={11}>
+        <EnhancedTable
+          rows={displayWeaponsArray}
+          headCells={headCells}
+          tableName={'List Name Weapons'}
+        />
       </Grid>
-    </>
+    </Grid>
   )
 }
 export default List
