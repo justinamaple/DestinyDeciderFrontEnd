@@ -8,13 +8,9 @@ import App from './App'
 import * as serviceWorker from './serviceWorker'
 import rootReducer from './store/reducers/rootReducer'
 
-const initialState = {
-  text: ''
-}
-
 const store = createStore(
   rootReducer,
-  initialState,
+  {},
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 )
 

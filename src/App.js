@@ -27,16 +27,22 @@ function App() {
   }
 
   const renderRedirect = () => {
-    if (userId === '' && localStorage.getItem('userId')) {
+    console.log(userId)
+    console.log(localStorage)
+    if (userId === undefined && !localStorage.getItem('userId')) {
       return <Redirect to='/signin' />
     }
   }
 
+  const renderNav = () => {
+    return <Nav />
+  }
+
   return (
-    <Router>
+    <Router path='/' component={App}>
       <div className='App'>
         {renderRedirect()}
-        <Nav />
+        {renderNav()}
         <Switch>
           <Route exact path='/signin' component={SignInSide} />
           <Route exact path='/signup' component={SignUp} />

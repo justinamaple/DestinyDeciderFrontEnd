@@ -68,7 +68,7 @@ function SignInSide() {
   const renderRedirect = () => {
     console.log(userId)
     if (userId !== undefined || localStorage.getItem('userId')) {
-      return <Redirect to='/' />
+      return <Redirect to='/profile' />
     }
   }
 
@@ -76,12 +76,12 @@ function SignInSide() {
     event.persist()
     event.preventDefault()
     // TODO: Don't hardcode this for prod
-    signin(event.target[0].value, event.target[2].value).then(json => {
+    signIn(event.target[0].value, event.target[2].value).then(json => {
       setAccountInfo(json)
     })
   }
 
-  const signin = (email, password) => {
+  const signIn = (email, password) => {
     return fetch('http://localhost:3001/signin', {
       method: 'POST',
       headers: {
@@ -96,8 +96,6 @@ function SignInSide() {
   }
 
   const setAccountInfo = json => {
-    console.log(json)
-
     dispatch(allActions.userActions.signIn(json.userId))
     localStorage.setItem('userId', JSON.stringify(json.userId))
   }

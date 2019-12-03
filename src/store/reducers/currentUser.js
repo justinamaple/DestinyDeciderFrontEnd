@@ -6,6 +6,8 @@ export default (state = {}, action) => {
       return { userId: action.userId }
     case 'SIGN_UP':
       return { userId: action.userId }
+    case 'SIGN_OUT':
+      return { userId: '' }
     default:
       return state
   }

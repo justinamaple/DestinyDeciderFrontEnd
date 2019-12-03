@@ -1,4 +1,7 @@
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import allActions from '../store/actions/index'
+import { Redirect } from 'react-router-dom'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import IconButton from '@material-ui/core/IconButton'
 import MenuItem from '@material-ui/core/MenuItem'
@@ -7,6 +10,8 @@ import Menu from '@material-ui/core/Menu'
 function AccountMenuIcon() {
   const [anchorEl, setAnchorEl] = React.useState(null)
   const open = Boolean(anchorEl)
+  const userId = useSelector(state => state.currentUser.userId)
+  const dispatch = useDispatch()
 
   const handleMenu = event => {
     setAnchorEl(event.currentTarget)
@@ -14,6 +19,37 @@ function AccountMenuIcon() {
 
   const handleClose = () => {
     setAnchorEl(null)
+  }
+
+  const handleSignIn = () => {
+    handleClose()
+    return <Redirect to='/signin' />
+  }
+
+  const handleSignOut = () => {
+    localStorage.clear()
+    dispatch(allActions.userActions.signOut())
+    handleClose()
+    return <Redirect to='/' />
+  }
+
+  const renderMenuItems = () => {
+    let menuItems = []
+    if (userId === undefined && !localStorage.getItem('userId')) {
+      menuItems.push(
+        <MenuItem key='signin' onClick={handleSignIn}>
+          Sign In
+        </MenuItem>
+      )
+    } else {
+      menuItems.push(
+        <MenuItem key='signout' onClick={handleSignOut}>
+          Sign Out
+        </MenuItem>
+      )
+    }
+
+    return menuItems
   }
 
   return (
@@ -42,8 +78,7 @@ function AccountMenuIcon() {
         open={open}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>My account</MenuItem>
+        {renderMenuItems()}
       </Menu>
     </div>
   )
