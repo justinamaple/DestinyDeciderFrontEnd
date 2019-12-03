@@ -1,6 +1,7 @@
 import React from 'react'
 import { Redirect } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+import allActions from '../store/actions/index'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 import CssBaseline from '@material-ui/core/CssBaseline'
@@ -58,11 +59,18 @@ const useStyles = makeStyles(theme => ({
 
 function SignInSide() {
   const classes = useStyles()
-
-  const text = useSelector(state => {
-    return state.text
+  const userId = useSelector(state => {
+    console.log(state)
+    return state.currentUser.userId
   })
   const dispatch = useDispatch()
+
+  const renderRedirect = () => {
+    console.log(userId)
+    if (userId !== undefined || localStorage.getItem('userId')) {
+      return <Redirect to='/' />
+    }
+  }
 
   const handleSubmit = event => {
     event.persist()
@@ -89,6 +97,8 @@ function SignInSide() {
 
   const setAccountInfo = json => {
     console.log(json)
+
+    dispatch(allActions.userActions.signIn(json.userId))
     localStorage.setItem('userId', JSON.stringify(json.userId))
   }
 
@@ -120,6 +130,7 @@ function SignInSide() {
 
   return (
     <Grid container component='main' className={classes.root}>
+      {renderRedirect()}
       <CssBaseline />
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>

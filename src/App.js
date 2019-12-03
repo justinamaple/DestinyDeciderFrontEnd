@@ -17,28 +17,25 @@ import Profile from './containers/Profile'
 import allActions from './store/actions/index'
 
 function App() {
+  const text = useSelector(state => state.simpleAction.text)
+  const userId = useSelector(state => state.currentUser.userId)
+  const dispatch = useDispatch()
+
   const handleSignOut = () => {
     localStorage.clear()
     return <Redirect to='/signin' />
   }
 
   const renderRedirect = () => {
-    if (this.state.accountId === '' && localStorage.getItem('account')) {
+    if (userId === '' && localStorage.getItem('userId')) {
       return <Redirect to='/signin' />
-    } else {
-      return <Redirect to='/' />
     }
   }
-
-  const text = useSelector(state => {
-    console.log(state)
-    return state.simpleAction.text
-  })
-  const dispatch = useDispatch()
 
   return (
     <Router>
       <div className='App'>
+        {renderRedirect()}
         <Nav />
         <Switch>
           <Route exact path='/signin' component={SignInSide} />
@@ -50,12 +47,6 @@ function App() {
           <Route component={Page404} />
         </Switch>
       </div>
-      <button
-        onClick={() => dispatch(allActions.simpleAction.simpleAction('text'))}
-      >
-        Test redux action
-      </button>
-      <pre>{text}</pre>
     </Router>
   )
 }
