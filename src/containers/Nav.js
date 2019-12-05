@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 import MenuIcon from '@material-ui/icons/Menu'
 import AccountMenuIcon from '../components/AccountMenuIcon'
-import { Link, Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import Search from '../components/Search'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
@@ -29,6 +29,7 @@ const useStyles = makeStyles(theme => ({
 
 function Nav() {
   const classes = useStyles()
+
   const [value, setValue] = React.useState(0)
   const [path, setPath] = React.useState(null)
 

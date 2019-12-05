@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import clsx from 'clsx'
 import { lighten, makeStyles } from '@material-ui/core/styles'
+import { Link, Redirect, useLocation } from 'react-router-dom'
 import DeleteIcon from '@material-ui/icons/Delete'
 import AddIcon from '@material-ui/icons/Add'
 import Toolbar from '@material-ui/core/Toolbar'
@@ -44,6 +45,7 @@ const EnhancedTableToolbar = props => {
   const { numSelected, setSelected, tableName, tableType, selected } = props
   const [lists, setLists] = React.useState([])
   const [selectedList, setSelectedList] = React.useState('')
+  const location = useLocation()
 
   useEffect(() => {
     fetchLists()
@@ -106,6 +108,32 @@ const EnhancedTableToolbar = props => {
       })
   }
 
+  function renderSelectedAction() {
+    console.log(location)
+    if (location.pathname.includes('/lists')) return renderDelete()
+    else return renderAdd()
+  }
+
+  function renderAdd() {
+    return (
+      <Tooltip title='Add'>
+        <IconButton aria-label='Add' onClick={fetchList}>
+          <AddIcon />
+        </IconButton>
+      </Tooltip>
+    )
+  }
+
+  function renderDelete() {
+    return (
+      <Tooltip title='Delete'>
+        <IconButton aria-label='Delete' onClick={fetchList}>
+          <DeleteIcon />
+        </IconButton>
+      </Tooltip>
+    )
+  }
+
   const handleChange = name => event => {
     setSelectedList(event.target.value)
   }
@@ -149,11 +177,7 @@ const EnhancedTableToolbar = props => {
       </FormControl>
 
       {numSelected > 0 ? (
-        <Tooltip title='Add'>
-          <IconButton aria-label='Add' onClick={fetchList}>
-            <AddIcon />
-          </IconButton>
-        </Tooltip>
+        renderSelectedAction()
       ) : (
         <Tooltip title='Filter list'>
           <IconButton aria-label='filter list'>
