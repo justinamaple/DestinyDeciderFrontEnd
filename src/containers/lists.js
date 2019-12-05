@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
+import { Link } from 'react-router-dom'
 import Grid from '@material-ui/core/Grid'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
@@ -25,6 +26,7 @@ const useStyles = makeStyles(theme => ({
 function Lists() {
   const classes = useStyles()
   const [rows, setRows] = React.useState([])
+  const moment = require('moment')
 
   useEffect(() => {
     fetch('http://localhost:3001/lists', {
@@ -36,7 +38,11 @@ function Lists() {
     })
       .then(resp => resp.json())
       .then(json => setRows(json))
-  })
+
+    return () => {
+      // Nothing to clean up
+    }
+  }, [])
 
   return (
     <Grid container spacing={3} alignItems='center' justify='center'>
@@ -54,10 +60,14 @@ function Lists() {
               {rows.map(row => (
                 <TableRow key={row.name}>
                   <TableCell component='th' scope='row'>
-                    {row.name}
+                    <Link to={`/lists/${row.id}`}>{row.name}</Link>
                   </TableCell>
-                  <TableCell align='right'>{row.created_at}</TableCell>
-                  <TableCell align='right'>{row.updated_at}</TableCell>
+                  <TableCell align='right'>
+                    {moment(row.created_at).format('MMMM Do YYYY, h:mm:ss a')}
+                  </TableCell>
+                  <TableCell align='right'>
+                    {moment(row.updated_at).format('MMMM Do YYYY, h:mm:ss a')}
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>

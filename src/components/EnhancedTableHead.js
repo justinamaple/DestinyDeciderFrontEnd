@@ -9,7 +9,6 @@ import Checkbox from '@material-ui/core/Checkbox'
 // This should almost certainly be passed in at some point
 // id is the key used to sort when clicking the header
 
-
 function EnhancedTableHead(props) {
   const {
     classes,

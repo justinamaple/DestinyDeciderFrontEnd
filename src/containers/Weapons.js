@@ -28,6 +28,7 @@ function Weapons() {
             rows={displayWeaponsArray}
             headCells={headCells}
             tableName={'All Weapons'}
+            tableType={'Add'}
           />
         </Grid>
       </Grid>

@@ -75,7 +75,7 @@ const useStyles = makeStyles(theme => ({
 
 function EnhancedTable(props) {
   const classes = useStyles()
-  const { headCells, rows, tableName } = props
+  const { headCells, rows, tableName, tableType } = props
   const [order, setOrder] = React.useState('asc')
   const [orderBy, setOrderBy] = React.useState('name')
   const [selected, setSelected] = React.useState([])
@@ -98,12 +98,12 @@ function EnhancedTable(props) {
     setSelected([])
   }
 
-  const handleClick = (event, name) => {
-    const selectedIndex = selected.indexOf(name)
+  const handleClick = (event, itemHash) => {
+    const selectedIndex = selected.indexOf(itemHash)
     let newSelected = []
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name)
+      newSelected = newSelected.concat(selected, itemHash)
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1))
     } else if (selectedIndex === selected.length - 1) {
@@ -131,7 +131,7 @@ function EnhancedTable(props) {
     setDense(event.target.checked)
   }
 
-  const isSelected = name => selected.indexOf(name) !== -1
+  const isSelected = itemHash => selected.indexOf(itemHash) !== -1
 
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage)
@@ -141,7 +141,10 @@ function EnhancedTable(props) {
       <Paper className={classes.paper}>
         <EnhancedTableToolbar
           numSelected={selected.length}
+          setSelected={setSelected}
           tableName={tableName}
+          tableType={tableType}
+          selected={selected}
         />
         <div className={classes.tableWrapper}>
           <Table
@@ -164,13 +167,13 @@ function EnhancedTable(props) {
               {stableSort(rows, getSorting(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.name)
+                  const isItemSelected = isSelected(row.itemHash)
                   const labelId = `enhanced-table-checkbox-${index}`
 
                   return (
                     <TableRow
                       hover
-                      onClick={event => handleClick(event, row.name)}
+                      onClick={event => handleClick(event, row.itemHash)}
                       role='checkbox'
                       aria-checked={isItemSelected}
                       tabIndex={-1}
@@ -204,10 +207,10 @@ function EnhancedTable(props) {
                       <TableCell align='right'>{row.slot}</TableCell>
                       <TableCell align='right'>{row.element}</TableCell>
                       <TableCell align='right'>{row.type}</TableCell>
-                      <TableCell align='right'>{row.impact}</TableCell>
-                      <TableCell align='right'>{row.range}</TableCell>
+                      <TableCell align='right'>{row.Impact}</TableCell>
+                      <TableCell align='right'>{row.Range}</TableCell>
                       <TableCell align='right'>{row.rpm} </TableCell>
-                      <TableCell align='right'>{row.magazine}</TableCell>
+                      <TableCell align='right'>{row.Magazine}</TableCell>
                     </TableRow>
                   )
                 })}

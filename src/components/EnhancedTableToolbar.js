@@ -1,13 +1,16 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import clsx from 'clsx'
 import { lighten, makeStyles } from '@material-ui/core/styles'
 import DeleteIcon from '@material-ui/icons/Delete'
+import AddIcon from '@material-ui/icons/Add'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import Tooltip from '@material-ui/core/Tooltip'
 import FilterListIcon from '@material-ui/icons/FilterList'
 import IconButton from '@material-ui/core/IconButton'
+import NativeSelect from '@material-ui/core/NativeSelect'
+import FormControl from '@material-ui/core/FormControl'
 
 const useToolbarStyles = makeStyles(theme => ({
   root: {
@@ -26,12 +29,86 @@ const useToolbarStyles = makeStyles(theme => ({
         },
   title: {
     flex: '1 1 100%'
+  },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 200
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2)
   }
 }))
 
 const EnhancedTableToolbar = props => {
   const classes = useToolbarStyles()
-  const { numSelected, tableName } = props
+  const { numSelected, setSelected, tableName, tableType, selected } = props
+  const [lists, setLists] = React.useState([])
+  const [selectedList, setSelectedList] = React.useState('')
+
+  useEffect(() => {
+    fetchLists()
+    return () => {
+      // TODO: Cancel fetch if navigating away
+    }
+  }, [])
+
+  const fetchLists = () => {
+    return fetch('http://localhost:3001/lists', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      }
+    })
+      .then(resp => resp.json())
+      .then(json => {
+        setSelectedList(json[0].id)
+        setLists(json)
+      })
+  }
+
+  const fetchList = () => {
+    return fetch(`http://localhost:3001/lists/${selectedList}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      }
+    })
+      .then(resp => resp.json())
+      .then(json => fetchAddToList(json))
+  }
+
+  const fetchAddToList = list => {
+    let weapons = JSON.parse(list.weapons)
+    let distinctWeapons = [...weapons, ...selected].filter(function(
+      value,
+      index,
+      self
+    ) {
+      return self.indexOf(value) === index
+    })
+
+    return fetch(`http://localhost:3001/lists/${selectedList}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      },
+      body: JSON.stringify({
+        user_id: 1,
+        weapons: distinctWeapons
+      })
+    })
+      .then(resp => resp.json())
+      .then(json => {
+        setSelected([])
+      })
+  }
+
+  const handleChange = name => event => {
+    setSelectedList(event.target.value)
+  }
 
   return (
     <Toolbar
@@ -53,10 +130,28 @@ const EnhancedTableToolbar = props => {
         </Typography>
       )}
 
+      <FormControl className={classes.formControl}>
+        <NativeSelect
+          className={classes.select}
+          value={selectedList}
+          onChange={handleChange('selectedList')}
+          inputProps={{
+            name: 'selectedList',
+            id: 'list-native-helper'
+          }}
+        >
+          {lists.map(list => (
+            <option key={list.id} value={list.id}>
+              {list.name}
+            </option>
+          ))}
+        </NativeSelect>
+      </FormControl>
+
       {numSelected > 0 ? (
-        <Tooltip title='Delete'>
-          <IconButton aria-label='delete'>
-            <DeleteIcon />
+        <Tooltip title='Add'>
+          <IconButton aria-label='Add' onClick={fetchList}>
+            <AddIcon />
           </IconButton>
         </Tooltip>
       ) : (

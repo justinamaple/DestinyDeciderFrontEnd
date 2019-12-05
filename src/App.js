@@ -27,8 +27,6 @@ function App() {
   }
 
   const renderRedirect = () => {
-    console.log(userId)
-    console.log(localStorage)
     if (userId === undefined && !localStorage.getItem('userId')) {
       return <Redirect to='/signin' />
     }
@@ -47,7 +45,7 @@ function App() {
           <Route exact path='/signin' component={SignInSide} />
           <Route exact path='/signup' component={SignUp} />
           <Route exact path='/users' component={Users} />
-          <Route exact path='/list' component={List} />
+          <Route exact path='/lists/:listId' component={List} />
           <Route exact path='/lists' component={Lists} />
           <Route exact path='/weapons' component={Weapons} />
           <Route exact path='/profile' component={Profile} />

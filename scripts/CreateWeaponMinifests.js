@@ -112,7 +112,7 @@ const createDisplayWeapon = item => {
     if (statName !== '' && statName !== 'Inventory Size') {
       let statValue = item.stats.stats[statHash].value
       if (!statValue) statValue = -1
-      namedStats[statName.toLowerCase()] = statValue
+      namedStats[statName.replace(/\s/g, '')] = statValue
     }
   }
 

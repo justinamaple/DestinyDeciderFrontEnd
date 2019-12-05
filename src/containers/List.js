@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
 import EnhancedTable from '../components/EnhancedTable'
 import displayWeaponsArray from '../assets/minifests/displayWeaponsArray.json'
+import displayWeaponsHash from '../assets/minifests/displayWeaponsHash.json'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -15,10 +16,12 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-function List() {
+function List({ match }) {
   const classes = useStyles()
+  const [rows, setRows] = React.useState([])
+
   const headCells = [
-    { id: 'icon', numeric: false, disablePadding: true, label: '' },
+    { id: 'icon', numeric: false, disablePadding: true, label: 'Icon' },
     { id: 'name', numeric: false, disablePadding: false, label: 'Name' },
     { id: 'tierType', numeric: true, disablePadding: false, label: 'Tier' },
     { id: 'slot', numeric: false, disablePadding: false, label: 'Slot' },
@@ -30,13 +33,36 @@ function List() {
     { id: 'magazine', numeric: true, disablePadding: false, label: 'Magazine' }
   ]
 
+  useEffect(() => {
+    fetch(`http://localhost:3001/lists/${match.params.listId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      }
+    })
+      .then(resp => resp.json())
+      .then(json => {
+        let weaponHashes = JSON.parse(json.weapons)
+        let displayWeapons = weaponHashes.map(
+          itemHash => displayWeaponsHash[itemHash]
+        )
+        setRows(displayWeapons)
+      })
+
+    return () => {
+      // Nothing to clean up
+    }
+  }, [])
+
   return (
     <Grid container spacing={3} alignItems='center' justify='center'>
       <Grid item xs={11}>
         <EnhancedTable
-          rows={displayWeaponsArray}
+          rows={rows}
           headCells={headCells}
-          tableName={'List Name Weapons'}
+          tableName={rows.name}
+          tableType={'Delete'}
         />
       </Grid>
     </Grid>
