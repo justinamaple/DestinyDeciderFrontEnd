@@ -60,7 +60,6 @@ const useStyles = makeStyles(theme => ({
 function SignInSide() {
   const classes = useStyles()
   const userId = useSelector(state => {
-    console.log(state)
     return state.currentUser.userId
   })
   const dispatch = useDispatch()
@@ -103,28 +102,6 @@ function SignInSide() {
   const closeErrors = () => {
     // this.setState({ errors: null })
   }
-
-  // const renderErrors = () => {
-  //   if (this.state.errors) {
-  //     return (
-  //       <div className='ui error message'>
-  //         <i className='close icon' onClick={this.closeErrors}></i>
-  //         <div className='header'>
-  //           There were some errors with your submission
-  //         </div>
-  //         {/* <ul className='list'>{this.renderErrorList()}</ul> */}
-  //       </div>
-  //     )
-  //   }
-  // }
-
-  // const renderErrorList = () => {
-  // const { errors } = this.state
-
-  //   return Object.keys(errors).map((key, index) => (
-  //     <li key={index}>{`${key} ${errors[key]}`}</li>
-  //   ))
-  // }
 
   return (
     <Grid container component='main' className={classes.root}>
