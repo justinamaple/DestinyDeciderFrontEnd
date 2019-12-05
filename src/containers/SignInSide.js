@@ -65,7 +65,6 @@ function SignInSide() {
   const dispatch = useDispatch()
 
   const renderRedirect = () => {
-    console.log(userId)
     if (userId !== undefined || localStorage.getItem('userId')) {
       return <Redirect to='/profile' />
     }

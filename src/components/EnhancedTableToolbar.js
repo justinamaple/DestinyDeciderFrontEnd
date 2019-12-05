@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import clsx from 'clsx'
 import { lighten, makeStyles } from '@material-ui/core/styles'
-import { Link, Redirect, useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import DeleteIcon from '@material-ui/icons/Delete'
 import AddIcon from '@material-ui/icons/Add'
 import Toolbar from '@material-ui/core/Toolbar'
@@ -42,7 +42,7 @@ const useToolbarStyles = makeStyles(theme => ({
 
 const EnhancedTableToolbar = props => {
   const classes = useToolbarStyles()
-  const { numSelected, setSelected, tableName, tableType, selected } = props
+  const { numSelected, setSelected, tableName, selected } = props
   const [lists, setLists] = React.useState([])
   const [selectedList, setSelectedList] = React.useState('')
   const location = useLocation()
@@ -83,13 +83,18 @@ const EnhancedTableToolbar = props => {
 
   const fetchAddToList = list => {
     let weapons = JSON.parse(list.weapons)
-    let distinctWeapons = [...weapons, ...selected].filter(function(
-      value,
-      index,
-      self
-    ) {
-      return self.indexOf(value) === index
-    })
+    let distinctWeapons
+    if (location.pathname.includes('/lists')) {
+      distinctWeapons = weapons.filter(itemHash => !selected.includes(itemHash))
+    } else {
+      distinctWeapons = [...weapons, ...selected].filter(function(
+        value,
+        index,
+        self
+      ) {
+        return self.indexOf(value) === index
+      })
+    }
 
     return fetch(`http://localhost:3001/lists/${selectedList}`, {
       method: 'PATCH',
@@ -109,7 +114,6 @@ const EnhancedTableToolbar = props => {
   }
 
   function renderSelectedAction() {
-    console.log(location)
     if (location.pathname.includes('/lists')) return renderDelete()
     else return renderAdd()
   }

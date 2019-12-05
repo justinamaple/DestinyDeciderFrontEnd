@@ -4,7 +4,8 @@ import {
   BrowserRouter as Router,
   Route,
   Switch,
-  Redirect
+  Redirect,
+  useLocation
 } from 'react-router-dom'
 import Lists from './containers/Lists'
 import List from './containers/List'
@@ -27,20 +28,22 @@ function App() {
   }
 
   const renderRedirect = () => {
+    // let location = useLocation()
+    let pathname = window.location.pathname
+    console.log(pathname)
     if (userId === undefined && !localStorage.getItem('userId')) {
-      return <Redirect to='/signin' />
+      if (pathname !== '/signin' && pathname !== '/signup')
+        return <Redirect to='/signin' />
     }
   }
 
-  const renderNav = () => {
-    return <Nav />
-  }
+  const renderNav = () => {}
 
   return (
     <Router path='/' component={App}>
       <div className='App'>
         {renderRedirect()}
-        {renderNav()}
+        <Nav />
         <Switch>
           <Route exact path='/signin' component={SignInSide} />
           <Route exact path='/signup' component={SignUp} />
