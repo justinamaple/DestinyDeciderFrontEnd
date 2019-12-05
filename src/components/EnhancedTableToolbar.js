@@ -42,7 +42,7 @@ const useToolbarStyles = makeStyles(theme => ({
 
 const EnhancedTableToolbar = props => {
   const classes = useToolbarStyles()
-  const { numSelected, setSelected, tableName, selected } = props
+  const { numSelected, setSelected, tableName, selected, rows, setRows } = props
   const [lists, setLists] = React.useState([])
   const [selectedList, setSelectedList] = React.useState('')
   const location = useLocation()
@@ -86,6 +86,8 @@ const EnhancedTableToolbar = props => {
     let distinctWeapons
     if (location.pathname.includes('/lists')) {
       distinctWeapons = weapons.filter(itemHash => !selected.includes(itemHash))
+      let newRows = rows.filter(row => !selected.includes(row.itemHash))
+      setRows(newRows)
     } else {
       distinctWeapons = [...weapons, ...selected].filter(function(
         value,

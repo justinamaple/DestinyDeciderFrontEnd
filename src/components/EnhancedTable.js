@@ -75,7 +75,7 @@ const useStyles = makeStyles(theme => ({
 
 function EnhancedTable(props) {
   const classes = useStyles()
-  const { headCells, rows, tableName, tableType } = props
+  const { headCells, tableName, tableType, rows, setRows } = props
   const [order, setOrder] = React.useState('asc')
   const [orderBy, setOrderBy] = React.useState('name')
   const [selected, setSelected] = React.useState([])
@@ -145,6 +145,8 @@ function EnhancedTable(props) {
           tableName={tableName}
           tableType={tableType}
           selected={selected}
+          rows={rows}
+          setRows={setRows}
         />
         <div className={classes.tableWrapper}>
           <Table

@@ -63,6 +63,7 @@ function List({ match }) {
           headCells={headCells}
           tableName={rows.name}
           tableType={'Delete'}
+          setRows={setRows}
         />
       </Grid>
     </Grid>
