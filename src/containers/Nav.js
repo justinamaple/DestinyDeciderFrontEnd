@@ -19,11 +19,13 @@ const useStyles = makeStyles(theme => ({
     marginRight: theme.spacing(2)
   },
   title: {
-    flexGrow: 1,
     display: 'none',
     [theme.breakpoints.up('sm')]: {
       display: 'block'
     }
+  },
+  flex: {
+    flexGrow: 1
   }
 }))
 
@@ -70,6 +72,7 @@ function Nav() {
               indicatorColor='primary'
               value={value}
               onChange={handleChange}
+              className={classes.flex}
             >
               <Tab label='Profile' onClick={() => setPath('/profile')} />
               <Tab label='Weapons' onClick={() => setPath('/weapons')} />
